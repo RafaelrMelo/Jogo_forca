@@ -51,37 +51,37 @@
 
         #cabeca {
             position: absolute;
-            top: -45px;
+            top: -63px;
             left: 215px;
         }
 
         #corpo {
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 255px;
         }
 
         #bracoe {
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 178px;
         }
 
         #bracod {
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 255px;
         }
 
         #pernae {
             position: absolute;
-            top: 140px;
+            top: 120px;
             left: 176px;
         }
 
         #pernad {
             position: absolute;
-            top: 140px;
+            top: 120px;
             left: 256px;
         }
 
@@ -91,7 +91,7 @@
 
         #forca {
             position: absolute;
-            top: -100px;
+            top: -130px;
             left: 250px;
         }
     </style>
@@ -137,6 +137,7 @@
                     jog.value = "";
                     acertou = false;
                     pesq = palavra.match(letra);
+                    document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase() + " ";
                     while (pesq != null) {
                         letraTmp = palavra.search(letra);
                         obj = document.getElementById("letra" + letraTmp).value = letra;
@@ -144,10 +145,8 @@
                         acertos++;
                         pesq = palavra.match(letra);
                         acertou = true;
-                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase() + " ";
                     }
                     if (!acertou) {
-                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase() + " ";
                         erros++;
 
                         if (erros < 7) {
@@ -235,6 +234,7 @@
     <hr>
     <div id="dvjogador" class="dvdisplay">
         <div id="controlesJogador">
+            <label for="letraj">Digite a letra: </label><br>
             <input type="text" id="letraj" class="letraj" maxlength="1">
             <button onclick="jogar()" class="btn">Jogar</button>
             <button onclick="Dica()" class="btn">Dica</button>
