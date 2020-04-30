@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Forca</title>
     <style>
+        body{
+            margin-left:10px;
+            margin-top: 10px;
+        }
         .letra {
             width: 30px;
             font-size: 30px;
@@ -67,12 +72,17 @@
             top: 250px;
             left: 50px;
         }
+        #titulo{
+            text-align: center;
+        }
     </style>
     <script>
         var biblioteca = ["cachorro", "gato", "papagaio","azul", "vermelho", "rosa","tijolo","predio","celular"];
+        var dcs=["Animais","Animais","Animais","Cores","Cores","Cores","Construção","Construção","Tecnologia"];
         var qtde = biblioteca.length - 1;
         var pos = Math.round(Math.random() * qtde);
         var palavra = biblioteca[pos];
+        var dicas=dcs[pos];
         var tam = palavra.length;
         var cxLetras = [];
         var acertos;
@@ -116,7 +126,7 @@
                         acertou = true;
                     }
                     if (!acertou) {
-                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase();
+                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase()+" ";
                         erros++;
 
                         if (erros < 7) {
@@ -148,6 +158,7 @@
             pos = Math.round(Math.random() * qtde);
             palavra = biblioteca[pos];
             tam = palavra.length;
+            dicas=dcs[pos];
             defineLetras(tam);
             document.getElementById("dvmsg").innerHTML = "";
             desenho[1] = document.getElementById("cabeca");
@@ -162,12 +173,16 @@
             }
 
         }
+        function Dica(){
+            alert(dicas);
+        }
         window.addEventListener("load", inicia);
 
     </script>
 </head>
 
 <body>
+    <h2 id="titulo">Jogo da Forca</h2>
     <div id="dvmenu" class="dvdisplay">
         <button onclick="inicia()">Nova Palavra</button>
     </div>
@@ -193,10 +208,12 @@
         <input type="text" id="letra18" class="letra" maxlength="1">
         <input type="text" id="letra19" class="letra" maxlength="1">
     </div>
+    <hr>
     <div id="dvjogador" class="dvdisplay">
         <div id="controlesJogador">
             <input type="text" id="letraj" class="letraj" maxlength="1">
             <button onclick="jogar()">Jogar</button>
+            <button onclick="Dica()">Dica</button>
             <div id="dvmsg"></div><br>
             <div id="dvletrasdigitadas">Letras digitadas</div>
         </div>
