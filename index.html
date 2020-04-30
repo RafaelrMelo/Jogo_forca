@@ -12,6 +12,16 @@
             margin-top: 10px;
         }
 
+        .btn {
+            background-color: rgba(0, 0, 0, 0.4);
+            height: 30%;
+            color: #fff;
+            cursor: pointer;
+            outline: none;
+            margin: 10px;
+            border: none;
+        }
+
         .letra {
             width: 30px;
             font-size: 30px;
@@ -78,126 +88,127 @@
         #titulo {
             text-align: center;
         }
-        #forca{
+
+        #forca {
             position: absolute;
-            top:-100px;
-            left:250px;
+            top: -100px;
+            left: 250px;
         }
     </style>
     <script>
-    var biblioteca = ["cachorro", "gato", "papagaio","azul", "vermelho", "rosa","tijolo","predio","celular","teclado","computador"];
-    var dcs=["Animais","Animais","Animais","Cores","Cores","Cores","Construção","Construção","Tecnologia","Tecnologia","Tecnologia"];
-    var qtde = biblioteca.length - 1;
-    var pos = Math.round(Math.random() * qtde);
-    var palavra = biblioteca[pos];
-    var dicas=dcs[pos];
-    var tam = palavra.length;
-    var cxLetras = [];
-    var acertos;
-    var errosMax = 7;
-    var erros = 0;
-    var desenho = [];
-    var acertou = false;
-    var jogando = false;
-    function defineLetras(l) {
-        var obj;
-        for (var i = 0; i < 20; i++) {
-            obj = document.getElementById("letra" + i).value = "";
-            obj = document.getElementById("letra" + i).style.display = "none";
+        var biblioteca = ["cachorro", "gato", "papagaio", "azul", "vermelho", "rosa", "tijolo", "predio", "celular", "teclado", "computador"];
+        var dcs = ["Animais", "Animais", "Animais", "Cores", "Cores", "Cores", "Construção", "Construção", "Tecnologia", "Tecnologia", "Tecnologia"];
+        var qtde = biblioteca.length - 1;
+        var pos = Math.round(Math.random() * qtde);
+        var palavra = biblioteca[pos];
+        var dicas = dcs[pos];
+        var tam = palavra.length;
+        var cxLetras = [];
+        var acertos;
+        var errosMax = 7;
+        var erros = 0;
+        var desenho = [];
+        var acertou = false;
+        var jogando = false;
+        function defineLetras(l) {
+            var obj;
+            for (var i = 0; i < 20; i++) {
+                obj = document.getElementById("letra" + i).value = "";
+                obj = document.getElementById("letra" + i).style.display = "none";
+            }
+            for (var i = 0; i < l; i++) {
+                obj = document.getElementById("letra" + i).style.display = "inline-block";
+            }
         }
-        for (var i = 0; i < l; i++) {
-            obj = document.getElementById("letra" + i).style.display = "inline-block";
-        }
-    }
-    function jogar() {
-        jog = document.getElementById("letraj");
-        jog.focus();
-        if (jog.value == "") {
-            alert("Digite a letra");
-        }
-        else {
-            if (jogando) {
-                var obj;
-                var letraTmp;
-                var letra;
-                var pesq;
-                var palavraus;
-                letra = jog.value;
-                jog.value = "";
-                acertou = false;
-                pesq = palavra.match(letra);
-                while (pesq != null) {
-                    letraTmp = palavra.search(letra);
-                    obj = document.getElementById("letra" + letraTmp).value = letra;
-                    palavra = palavra.replace(letra, '0');
-                    acertos++;
+        function jogar() {
+            jog = document.getElementById("letraj");
+            jog.focus();
+            if (jog.value == "") {
+                alert("Digite a letra");
+            }
+            else {
+                if (jogando) {
+                    var obj;
+                    var letraTmp;
+                    var letra;
+                    var pesq;
+                    var palavraus;
+                    letra = jog.value;
+                    jog.value = "";
+                    acertou = false;
                     pesq = palavra.match(letra);
-                    acertou = true;
-                    document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase()+" ";
-                }
-                if (!acertou) {
-                    document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase()+" ";
-                    erros++;
+                    while (pesq != null) {
+                        letraTmp = palavra.search(letra);
+                        obj = document.getElementById("letra" + letraTmp).value = letra;
+                        palavra = palavra.replace(letra, '0');
+                        acertos++;
+                        pesq = palavra.match(letra);
+                        acertou = true;
+                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase() + " ";
+                    }
+                    if (!acertou) {
+                        document.getElementById("dvletrasdigitadas").innerHTML += letra.toUpperCase() + " ";
+                        erros++;
 
-                    if (erros < 7) {
-                        desenho[erros].style.display = "block";
+                        if (erros < 7) {
+                            desenho[erros].style.display = "block";
+                        }
+                        else {
+                            document.getElementById("cabeca").src = "imgs/cabeca2.png";
+                            document.getElementById("dvmsg").innerHTML = "<strong>PERDEU</strong>";
+                            jogando = false;
+                        }
                     }
-                    else {
-                        document.getElementById("cabeca").src = "imgs/cabeca2.png";
-                        document.getElementById("dvmsg").innerHTML = "PERDEU";
-                        jogando=false;
+                    if (acertos == tam) {
+                        document.getElementById("dvmsg").innerHTML = "";
+                        document.getElementById("dvmsg").innerHTML = "<strong>GANHOU</strong>";
+                        jogando = false;
                     }
-                }
-                if(acertos==tam){
-                    document.getElementById("dvmsg").innerHTML="";
-                    document.getElementById("dvmsg").innerHTML="GANHOU";
-                    jogando=false;
                 }
             }
         }
-    }
-    function inicia() {
-        jogando = true;
-        var jog = document.getElementById("letraj");
-        jog.value = "";
-        jog.focus();
-        acertos = 0;
-        erros = 0;
-        acertou = false;
-        document.getElementById("dvletrasdigitadas").innerHTML = " ";
-        pos = Math.round(Math.random() * qtde);
-        palavra = biblioteca[pos];
-        tam = palavra.length;
-        dicas=dcs[pos];
-        defineLetras(tam);
-        document.getElementById("dvmsg").innerHTML = "";
-        desenho[1] = document.getElementById("cabeca");
-        desenho[2] = document.getElementById("corpo");
-        desenho[3] = document.getElementById("bracoe");
-        desenho[4] = document.getElementById("bracod");
-        desenho[5] = document.getElementById("pernae");
-        desenho[6] = document.getElementById("pernad");
-        document.getElementById("cabeca").src = "imgs/cabeca.png";
-        for (var i = 1; i < 7; i++) {
-            desenho[i].style.display = "none";
-        }
-        for(var i=0;i<20;i++){
-            document.getElementById("letra"+i).setAttribute('readonly',true);
-        }
+        function inicia() {
+            jogando = true;
+            var jog = document.getElementById("letraj");
+            jog.value = "";
+            jog.focus();
+            acertos = 0;
+            erros = 0;
+            acertou = false;
+            document.getElementById("dvletrasdigitadas").innerHTML = " ";
+            pos = Math.round(Math.random() * qtde);
+            palavra = biblioteca[pos];
+            tam = palavra.length;
+            dicas = dcs[pos];
+            defineLetras(tam);
+            document.getElementById("dvmsg").innerHTML = "";
+            desenho[1] = document.getElementById("cabeca");
+            desenho[2] = document.getElementById("corpo");
+            desenho[3] = document.getElementById("bracoe");
+            desenho[4] = document.getElementById("bracod");
+            desenho[5] = document.getElementById("pernae");
+            desenho[6] = document.getElementById("pernad");
+            document.getElementById("cabeca").src = "imgs/cabeca.png";
+            for (var i = 1; i < 7; i++) {
+                desenho[i].style.display = "none";
+            }
+            for (var i = 0; i < 20; i++) {
+                document.getElementById("letra" + i).setAttribute('readonly', true);
+            }
 
-    }
-    function Dica(){
-        alert(dicas);
-    }
-    window.addEventListener("load", inicia);
+        }
+        function Dica() {
+            alert(dicas);
+        }
+        window.addEventListener("load", inicia);
 
-</script>
+    </script>
 </head>
 
 <body>
     <h2 id="titulo">Jogo da Forca</h2>
     <div id="dvmenu" class="dvdisplay">
-        <button onclick="inicia()">Nova Palavra</button>
+        <button onclick="inicia()" class="btn">Nova Palavra</button>
     </div>
     <div id="dvpalavra" class="dvdisplay">
         <input type="text" id="letra0" class="letra" maxlength="1">
@@ -225,21 +236,21 @@
     <div id="dvjogador" class="dvdisplay">
         <div id="controlesJogador">
             <input type="text" id="letraj" class="letraj" maxlength="1">
-            <button onclick="jogar()">Jogar</button>
-            <button onclick="Dica()">Dica</button>
+            <button onclick="jogar()" class="btn">Jogar</button>
+            <button onclick="Dica()" class="btn">Dica</button>
             <div id="dvmsg"></div><br>
-            <div>Letras digitadas </div>
+            <div><strong>Letras digitadas: </strong> </div>
             <div id="dvletrasdigitadas"> </div>
             <div id="dvForca">
-            <img id="forca" src="imgs\forca.png">
-            <img id="cabeca" src="imgs\cabeca.png">
-            <img id="corpo" src="imgs\corpo.png">
-            <img id="bracoe" src="imgs\bracoe.png">
-            <img id="bracod" src="imgs\bracod.png">
-            <img id="pernae" src="imgs\pernae.png">
-            <img id="pernad" src="imgs\pernad.png">
+                <img id="forca" src="imgs\forca.png">
+                <img id="cabeca" src="imgs\cabeca.png">
+                <img id="corpo" src="imgs\corpo.png">
+                <img id="bracoe" src="imgs\bracoe.png">
+                <img id="bracod" src="imgs\bracod.png">
+                <img id="pernae" src="imgs\pernae.png">
+                <img id="pernad" src="imgs\pernad.png">
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
