@@ -110,6 +110,7 @@
         var desenho = [];
         var acertou = false;
         var jogando = false;
+        var jog;
         function defineLetras(l) {
             var obj;
             for (var i = 0; i < 20; i++) {
@@ -132,7 +133,6 @@
                     var letraTmp;
                     var letra;
                     var pesq;
-                    var palavraus;
                     letra = jog.value;
                     jog.value = "";
                     acertou = false;
@@ -166,9 +166,10 @@
                 }
             }
         }
+
         function inicia() {
             jogando = true;
-            var jog = document.getElementById("letraj");
+            jog = document.getElementById("letraj");
             jog.value = "";
             jog.focus();
             acertos = 0;
@@ -194,10 +195,18 @@
             for (var i = 0; i < 20; i++) {
                 document.getElementById("letra" + i).setAttribute('readonly', true);
             }
+            addEventListener("keydown",verificatecla);
 
+        }
+        function verificatecla(){
+            var tecla=event.keyCode;
+            if(tecla == 13){
+                jogar();
+            }
         }
         function Dica() {
             alert(dicas);
+            jog.focus();
         }
         window.addEventListener("load", inicia);
 
